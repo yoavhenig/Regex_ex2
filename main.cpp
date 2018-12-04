@@ -13,9 +13,9 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  regex searchWord(R"(^\w+(\[\d\,\d\])?$)");
-  regex searchAnd(R"(^(\w+)\s+\{AND\}\s+(\w+)$)");
-  regex searchOr(R"(^(\w+)\s+\{OR\}\s+(\w+)$)");
+  regex searchWord(R"(^\w+(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
+  regex searchAnd(R"(^(\w+)\s\{AND\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
+  regex searchOr(R"(^(\w+)\s\{OR\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
   // regex searchAndN(R"(^(\w+)(\s{\d}\s)(\w+)([\d,\d])?$.*)");
 
     if (argc != 2)
@@ -27,6 +27,7 @@ int main(int argc, char **argv)
 //	tq.display_map(); // debugging aid
 
   auto matches = smatch{};
+  size_t leftline, rightline;
 
 	while (true) {
 		cout << "enter word to look for, or q to quit: ";
@@ -34,29 +35,70 @@ int main(int argc, char **argv)
 		getline(cin, line);
 		if (line.empty() || line == "q") break;
 
-      else if(regex_match(line, matches, searchWord)){
+      else if(regex_match(line, matches, searchWord)){  //match for singel word
         std::cout << "searchWord..." << '\n';
         WordQuery query(line);
         auto result = query.eval(tq);
+          if(matches[2].matched && matches[3].matched){
+            if(matches[2].matched){
+              leftline=std::stoi(matches[2]);
+            }
+            if(matches[3].matched){
+              rightline=std::stoi(matches[3]);
+            }
+            std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
+          }
     		print(cout, result) << endl;
       }
-      else if(regex_match(line, matches, searchAnd)){
+
+
+
+      else if(regex_match(line, matches, searchAnd)){ //match sor AND search
         std::cout << "searchAnd..." << '\n';
         AndQuery query(matches[1], matches[2]);
         auto result = query.eval(tq);
+          if(matches[4].matched && matches[5].matched){
+            if(matches[4].matched){
+              leftline=std::stoi(matches[4]);
+            }
+            if(matches[5].matched){
+              rightline=std::stoi(matches[5]);
+            }
+            std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
+          }
     		print(cout, result) << endl;
       }
-      else if(regex_match(line, matches, searchOr)){
+
+
+
+      else if(regex_match(line, matches, searchOr)){  //match sor OR search
         std::cout << "searchOr..." << '\n';
         OrQuery query(matches[1], matches[2]);
         auto result = query.eval(tq);
+          if(matches[4].matched && matches[5].matched){
+            if(matches[4].matched){
+              leftline=std::stoi(matches[4]);
+            }
+            if(matches[5].matched){
+              rightline=std::stoi(matches[5]);
+            }
+            std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
+          }
     		print(cout, result) << endl;
       }
+
+
+
+
       // else if(regex_match(line, matches, searchAndN)){
       //   std::cout << "searchAndN..." << '\n';
-      //   break;
+      //   auto result = query.eval(tq);
+  		//   print(cout, result) << endl;
       // }
-      // else{std::cout << "Default" << '\n';}
+
+
+
+      else{std::cout << "‫‪Unrecognized‬‬ ‫‪search‬‬" << '\n';} //no regex match
 
 
     // auto result = query.eval(tq);
