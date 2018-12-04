@@ -9,13 +9,13 @@
 #include <sstream>
 #include <memory>
 
-// abstract class 
+// abstract class
 class Query_base {
 public:
     using line_no = TextQuery::line_no;
     Query_base() = default;
 	virtual ~Query_base() = default;
-    virtual QueryResult eval(const TextQuery&) const = 0; 
+    virtual QueryResult eval(const TextQuery&) const = 0;
 //private:
 };
 
@@ -28,10 +28,10 @@ public:
 private:
     std::string query_word;
 };
-    
+
 class AndQuery: public Query_base {
 public:
-    AndQuery(const std::string &left_string, const std::string &right_string): 
+    AndQuery(const std::string &left_string, const std::string &right_string):
             left_query(WordQuery(left_string)), right_query(WordQuery(right_string)),
 			s1(left_string), s2(right_string){ }
     QueryResult eval(const TextQuery&) const;
@@ -40,9 +40,10 @@ private:
 	const std::string s1, s2;
 };
 
+
 class OrQuery: public Query_base {
 public:
-    OrQuery(const std::string &left_string, const std::string &right_string): 
+    OrQuery(const std::string &left_string, const std::string &right_string):
             left_query(WordQuery(left_string)), right_query(WordQuery(right_string)),
 			s1(left_string), s2(right_string){ }
     QueryResult eval(const TextQuery&) const;
