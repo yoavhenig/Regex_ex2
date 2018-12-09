@@ -16,7 +16,7 @@ int main(int argc, char **argv)
   regex searchWord(R"(^\w+(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
   regex searchAnd(R"(^(\w+)\s\{AND\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
   regex searchOr(R"(^(\w+)\s\{OR\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
-  // regex searchAndN(R"(^(\w+)(\s{\d}\s)(\w+)([\d,\d])?$.*)");
+  regex searchAndN(R"(^(\w+)\s\{(\d+)\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
 
     if (argc != 2)
 		{cerr << "No input file" << endl; return EXIT_FAILURE;}
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
 
 
-      else if(regex_match(line, matches, searchAnd)){ //match sor AND search
+      else if(regex_match(line, matches, searchAnd)){ //match for AND search
         std::cout << "searchAnd..." << '\n';
         AndQuery query(matches[1], matches[2]);
         auto result = query.eval(tq);
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 
 
 
-      else if(regex_match(line, matches, searchOr)){  //match sor OR search
+      else if(regex_match(line, matches, searchOr)){  //match for OR search
         std::cout << "searchOr..." << '\n';
         OrQuery query(matches[1], matches[2]);
         auto result = query.eval(tq);
@@ -90,35 +90,26 @@ int main(int argc, char **argv)
 
 
 
-      // else if(regex_match(line, matches, searchAndN)){
-      //   std::cout << "searchAndN..." << '\n';
-      //   auto result = query.eval(tq);
-  		//   print(cout, result) << endl;
-      // }
+      else if(regex_match(line, matches, searchAndN)){  //match for AndN search
+        std::cout << "searchAndN..." << '\n';
+        NQuery query(matches[1], matches[3], std::stoi(matches[2]));
+        auto result = query.eval(tq);
+          if(matches[5].matched && matches[6].matched){
+            if(matches[5].matched){
+              leftline=std::stoi(matches[5]);
+            }
+            if(matches[6].matched){
+              rightline=std::stoi(matches[6]);
+            }
+            std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
+          }
+    		print(cout, result) << endl;
+      }
 
 
 
       else{std::cout << "‫‪Unrecognized‬‬ ‫‪search‬‬" << '\n';} //no regex match
 
-
-    // auto result = query.eval(tq);
-		// print(cout, result) << endl;
-
-
-
-		// AndQuery aquery("Unix", "system");
-		// result = aquery.eval(tq);
-		// print(cout, result) << endl;
-    //
-		// OrQuery oquery("Unix", "system");
-		// result = oquery.eval(tq);
-		// print(cout, result) << endl;
-
-		// AndNQuery anquery("Unix", "system", 3);
-		// result = anquery.eval(tq);
-		// print(cout, result) << endl;
-		// will print:
-		// "Unix {3} system" occurs ...
 	}
 	return 0;
 }

@@ -35,7 +35,7 @@ public:
             left_query(WordQuery(left_string)), right_query(WordQuery(right_string)),
 			s1(left_string), s2(right_string){ }
     QueryResult eval(const TextQuery&) const;
-private:
+protected:
     WordQuery left_query, right_query;
 	const std::string s1, s2;
 };
@@ -50,5 +50,15 @@ public:
 private:
     WordQuery left_query, right_query;
 	const std::string s1, s2;
+};
+
+
+class NQuery: public AndQuery {
+public:
+  NQuery(const std::string &left_string, const std::string &right_string, const size_t &number):
+            AndQuery(left_string, right_string), n(number){ }
+    QueryResult eval(const TextQuery&) const;
+private:
+const size_t n;
 };
 #endif
