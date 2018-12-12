@@ -11,6 +11,8 @@
 
 class QueryResult {
 friend std::ostream& print(std::ostream&, const QueryResult&);
+friend std::ostream& print(std::ostream&, const QueryResult&, size_t, size_t);
+friend class NQuery;
 public:
 	typedef std::vector<std::string>::size_type line_no;
 	typedef std::set<line_no>::const_iterator line_it;

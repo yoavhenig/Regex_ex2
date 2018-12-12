@@ -6,6 +6,8 @@
 #include <iostream>
 #include <cstddef>
 #include <iterator>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 QueryResult
@@ -44,7 +46,17 @@ NQuery::eval(const TextQuery& text) const
     set_intersection(left.begin(), left.end(),
                    right.begin(), right.end(),
                    inserter(*ret_lines, ret_lines->begin()));
-    return QueryResult(s1 + " {"+ std::to_string(n) +"} " + s2, ret_lines, left.get_file());
+
+    QueryResult qr(s1 + " {"+ std::to_string(n) +"} " + s2, ret_lines, left.get_file());
+    // for (auto num : *qr.lines) // for every element in the set
+    // {
+    //   std::istringstream iss(*(qr.file->begin() + num));
+    //   std::istream_iterator<std::string> begin(iss), end;
+    //
+    //   //putting all the tokens in the vector
+    //   std::vector<std::string> arrayTokens(begin, end);
+    // }
+    return QueryResult (s1 + " {"+ std::to_string(n) +"} " + s2, ret_lines, left.get_file());
 }
 
 
@@ -60,16 +72,14 @@ ostream &print(ostream &os, const QueryResult &qr)
 	return os;
 }
 
-// ostream &print(ostream &os, const QueryResult &qr, const size_t from, const size_t to)
-// {
-//     // if the word was found, print the count and all occurrences
-//     os << "\"" << qr.sought << "\" occurs " << qr.lines->size() << " times" << endl;
-//
-//     // print each line in which the word appeared
-// 	for (auto num : *qr.lines) // for every element in the set
-//     if(num>=from && num<=to){
-//         os << "(line " << num + 1 << ") "
-// 		   << *(qr.file->begin() + num) << endl;
-//      }
-// 	return os;
-// }
+ostream &print(ostream &os, const QueryResult &qr, size_t from, size_t to)
+{
+    // if the word was found, print the count and all occurrences
+    os << "\"" << qr.sought << "\" occurs " << qr.lines->size() << " times" << endl;
+
+    // print each line in which the word appeared
+	for (auto num : *qr.lines) // for every element in the set
+        os << "(line " << num + 1 << ") "
+		   << *(qr.file->begin() + num) << endl;
+	return os;
+}
