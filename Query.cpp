@@ -72,14 +72,14 @@ ostream &print(ostream &os, const QueryResult &qr)
 	return os;
 }
 
-ostream &print(ostream &os, const QueryResult &qr, size_t from, size_t to)
-{
-    // if the word was found, print the count and all occurrences
-    os << "\"" << qr.sought << "\" occurs " << qr.lines->size() << " times" << endl;
-
-    // print each line in which the word appeared
-	for (auto num : *qr.lines) // for every element in the set
-        os << "(line " << num + 1 << ") "
-		   << *(qr.file->begin() + num) << endl;
-	return os;
-}
+// ostream &print(ostream &os, const QueryResult &qr, size_t a, size_t b)
+// {
+//     // if the word was found, print the count and all occurrences
+//     os << "\"" << qr.sought << "\" occurs " << qr.lines->size() << " times" << endl;
+//
+//     // print each line in which the word appeared
+// 	for (auto num : *qr.lines) // for every element in the set
+//         os << "(line " << num + 1 << ") "
+// 		   << *(qr.file->begin() + num) << endl;
+// 	return os;
+// }

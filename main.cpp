@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  regex searchWord(R"(^\w+(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
+  regex searchWord(R"(^\w+(\s\[(\d+)\,(\d+)\])?$)");
   regex searchAnd(R"(^(\w+)\s\{AND\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
   regex searchOr(R"(^(\w+)\s\{OR\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
   regex searchAndN(R"(^(\w+)\s\{(\d+)\}\s(\w+)(\s\[)?(\d+)?\,?(\d+)?(\])?$)");
