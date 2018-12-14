@@ -38,9 +38,9 @@ OrQuery::eval(const TextQuery& text) const
 QueryResult
 NQuery::eval(const TextQuery& text) const
 {
-
     QueryResult qr = AndQuery::eval(text);
     qr.sought=(s1 + " {"+ std::to_string(n) +"} " + s2);
+    set<size_t> out_of_range;
     for (auto num : *qr.lines) // for every element in the set
     {
       std::istringstream iss(*(qr.file->begin() + num));
@@ -48,13 +48,13 @@ NQuery::eval(const TextQuery& text) const
 
       //putting all the tokens in the vector
       std::vector<std::string> sentence(begin, end);
-
       size_t distance = std::abs(find(sentence.begin(), sentence.end(), s1)
                             - find(sentence.begin(), sentence.end(), s2))-1;
       if(distance>n){
-        qr.lines.get()->erase(num);
+        out_of_range.insert(num);
       }
     }
+    for(auto num : out_of_range) qr.lines.get()->erase(num);
     return qr;
 }
 
