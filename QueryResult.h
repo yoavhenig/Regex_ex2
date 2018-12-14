@@ -1,4 +1,4 @@
-// This file contains code from "C++ Primer, Fifth Edition",
+// This file contains code from "C++ Primer, Fifth Edition", 
 // by Stanley B.Lippman, Josee Lajoie, and Barbara E. Moo
 
 #ifndef QUERYRESULT_H

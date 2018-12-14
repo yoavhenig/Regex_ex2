@@ -26,7 +26,7 @@ public:
                     { return t.query(query_word); }
 	std::string rep() const { return query_word; }
 private:
-    std::string query_word;
+    const std::string query_word;
 };
 
 class AndQuery: public Query_base {
@@ -40,7 +40,6 @@ protected:
 	const std::string s1, s2;
 };
 
-
 class OrQuery: public Query_base {
 public:
     OrQuery(const std::string &left_string, const std::string &right_string):
@@ -51,7 +50,6 @@ private:
     WordQuery left_query, right_query;
 	const std::string s1, s2;
 };
-
 
 class NQuery: public AndQuery {
 public:
