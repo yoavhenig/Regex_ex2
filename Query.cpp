@@ -75,7 +75,7 @@ ostream &print(ostream &os, const QueryResult &qr, size_t from, size_t to)  //ra
     // print each line in which the word appeared
 	for (auto num : *qr.lines) // for every element in the set
   {
-    if((num+1)>from&&(num+1)<to){ //if the line is in range
+    if((num+1)>=from&&(num+1)<=to){ //if the line is in range
         os << "(line " << num + 1 << ") "
 		   << *(qr.file->begin() + num) << endl;
        ++counter;

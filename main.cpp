@@ -40,13 +40,11 @@ size_t leftline, rightline;
 
 
     else if(regex_match(line, matches, searchWord)){  //match for singel word
-        // std::cout << "searchWord..." << '\n';
         WordQuery query(matches[1]);
         auto result = query.eval(tq);
           if(matches[3].matched && matches[4].matched){
               leftline=std::stoi(matches[3]);
               rightline=std::stoi(matches[4]);
-            // std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
             print(cout, result, leftline, rightline) << endl;
             continue;
           }
@@ -55,13 +53,11 @@ size_t leftline, rightline;
 
 
         else if(regex_match(line, matches, searchAnd)){ //match for AND search
-          // std::cout << "searchAnd..." << '\n';
           AndQuery query(matches[1], matches[2]);
           auto result = query.eval(tq);
             if(matches[4].matched && matches[5].matched){
                 leftline=std::stoi(matches[4]);
                 rightline=std::stoi(matches[5]);
-              // std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
               print(cout, result, leftline, rightline) << endl;
               continue;
             }
@@ -71,13 +67,11 @@ size_t leftline, rightline;
 
 
         else if(regex_match(line, matches, searchOr)){  //match for OR search
-          // std::cout << "searchOr..." << '\n';
           OrQuery query(matches[1], matches[2]);
           auto result = query.eval(tq);
             if(matches[4].matched && matches[5].matched){
                 leftline=std::stoi(matches[4]);
                 rightline=std::stoi(matches[5]);
-              // std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
               print(cout, result, leftline, rightline) << endl;
               continue;
             }
@@ -88,13 +82,11 @@ size_t leftline, rightline;
 
 
         else if(regex_match(line, matches, searchAndN)){  //match for AndN search
-          // std::cout << "searchAndN..." << '\n';
           NQuery query(matches[1], matches[3], std::stoi(matches[2]));
           auto result = query.eval(tq);
             if(matches[5].matched && matches[6].matched){
                 leftline=std::stoi(matches[5]);
                 rightline=std::stoi(matches[6]);
-              // std::cout << "left: "<<leftline<<" right: "<<rightline << '\n';
               print(cout, result, leftline, rightline) << endl;
               continue;
             }
@@ -103,7 +95,7 @@ size_t leftline, rightline;
 
 
 
-        else{std::cout << "‫‪Unrecognized‬‬ ‫‪search‬‬" << '\n';} //no regex match
+        else{std::cout <<"Unrecognized search\n"<< '\n';} //no regex match
 
   	}
 	return 0;
