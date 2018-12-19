@@ -1,2 +1,2 @@
-# Regex_ex2
-Exercise 2 in C++ course about regular expressions
+C++ course and Advanced Programming
+Exercises and practice code programs
